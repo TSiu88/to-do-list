@@ -3,16 +3,30 @@ function TaskList() {
   this.tasklist = [];
   this.currentId = 0;
 }
+
 TaskList.prototype.addTask = function(task) {
   task.id = this.assignId();
   this.tasklist.push(task);
   
 }
+
 TaskList.prototype.assignId = function() {
   this.currentId +=1;
   
   return this.currentId;
 }
+
+TaskList.prototype.findTask = function(id){
+  for (var i=0; i< this.tasklist.length; i++) {
+    if (this.tasklist[i]) {
+      if (this.tasklist[i].id == id) {
+        return this.tasklist[i];
+      }
+    }
+  };
+  return false;
+}
+
 TaskList.prototype.deleteTask = function(id) {
   for (var i=0; i<this.tasklist.length; i++) {
     if(this.tasklist[i]) {
@@ -29,46 +43,49 @@ function Task(task){
   this.task = task;
 }
 
+// User Interface Logic
+var wholeList = new TaskList();
+
+function createCheckbox(entry){
+  var checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = entry.id;
+  checkbox.value = entry.id;
+  checkbox.name = entry.task.toString();
+
+  var label = document.createElement("label");
+  label.innerHTML = entry.task.toString();
+  label.name = entry.task.toString();
+  label.id = entry.id;
+
+  var text = "<label id=" + label.id + "> " + label.innerHTML + "</label><br id=" + label.id +">";
+  $("#checklist").append(checkbox);
+  $("#checklist").append(text);
+};
 
 $(document).ready(function(){
-  var wholeList = new TaskList();
   $(".btn").on("click", function(){
     event.preventDefault();
+
     var task = $("input#task").val();
     var buttonId = this.id;
 
     if (task !== "" && buttonId === "submit"){
       var currentTask = new Task(task);
       wholeList.addTask(currentTask);
-      console.log(wholeList.tasklist);
-      var checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
-      checkbox.id = currentTask.id;
-      checkbox.value = currentTask.id;
-      console.log("checkbox id",checkbox.id);
-      checkbox.name = task;
-      var label = document.createElement("label");
-      label.innerHTML = task;
-      label.id = currentTask.id;
-      console.log(label.id);
-      $("#checklist").append(checkbox);
-      $("#checklist").append(label);
-      $("#checklist").append(document.createElement("br"));
+      createCheckbox(currentTask);
       
     }
     else if (buttonId === "delete"){
       var n = $("input:checked").length;
-      console.log("num checked", n);
       if (n > 0){
         $("input:checked").each(function(){
           var removeId = $("input:checked").val();
-          console.log(removeId);
-          var removed = wholeList.deleteTask(removeId);
-          console.log(wholeList.tasklist);
-          //Does delete out of array, Need to delete checkbox and text
+          wholeList.deleteTask(removeId);
+          this.remove();
+          $("label").remove("#" +removeId);
+          $("br").remove("#" + removeId);
         });
-        
-        
       }else{
         alert("No entries checked for deletion")
       }
@@ -76,8 +93,6 @@ $(document).ready(function(){
     else {
       alert("Invalid entry");
     }
-
-    
 
   });
 });

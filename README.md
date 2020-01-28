@@ -35,11 +35,11 @@ _This program was an exercise done in the Epicodus class to practice using objec
 ### Instructions
 _This page may be viewed by cloning the [repository](https://github.com/TSiu88/to-do-list.git) from my [GitHub page](https://github.com/TSiu88) and opening the **index.html** file in any web browser._
 
-<!-- ## Notable Features
+## Notable Features
 
-_features that make the project stand out_
+_This program uses checkboxes for the checklist and is able to remove the entries both in the array and in the list.  It also removes the entry's name label along with the checkbox._
 
-## Screenshots
+<!-- ## Screenshots
 
 _Here is a snippet of what the input looks like:_
 
@@ -53,7 +53,7 @@ _{Show pictures using ![alt text](image.jpg), show what library does as concisel
 
 ## Known Bugs
 
-_This program currently is unable to delete entries from the list_
+_There are currently no known bugs in this program_
 
 ## Support and contact details
 
