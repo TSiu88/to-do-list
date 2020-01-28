@@ -74,10 +74,10 @@ $(document).ready(function(){
       var currentTask = new Task(task);
       wholeList.addTask(currentTask);
       createCheckbox(currentTask);
-      
     }
     else if (buttonId === "delete"){
       var n = $("input:checked").length;
+
       if (n > 0){
         $("input:checked").each(function(){
           var removeId = $("input:checked").val();
